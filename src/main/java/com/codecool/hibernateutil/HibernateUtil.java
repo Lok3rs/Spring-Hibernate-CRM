@@ -1,8 +1,10 @@
 package com.codecool.hibernateutil;
 
+import com.codecool.entity.Customer;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 import java.io.FileInputStream;
@@ -11,31 +13,31 @@ import java.util.Properties;
 
 public class HibernateUtil {
 
-
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 // will work if start directly from main app
-                InputStream input = new FileInputStream("application.properties");
+//                InputStream input = new FileInputStream("application.properties");
                 Configuration configuration = new Configuration();
 
                 Properties settings = new Properties();
-//                settings.put(Environment.DRIVER, "org.postgresql.Driver");
-//                settings.put(Environment.URL, "jdbc:postgresql://localhost/many-to-many");
-//                settings.put(Environment.USER, "postgres");
-//                settings.put(Environment.PASS, "z3xjek39");
-//                settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-//
-//                settings.put(Environment.SHOW_SQL, "true");
-//
-//                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-//
-//                settings.put(Environment.HBM2DDL_AUTO, "update");
+                settings.put(Environment.DRIVER, "org.postgresql.Driver");
+                settings.put(Environment.URL, "jdbc:postgresql://localhost/" + System.getenv("PSQL_DBNAME"));
+                settings.put(Environment.USER, System.getenv("PSQL_USERNAME"));
+                settings.put(Environment.PASS, System.getenv("PSQL_PASSWORD"));
+                settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
 
-                settings.load(input);
+                settings.put(Environment.SHOW_SQL, "true");
+
+                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+
+                settings.put(Environment.HBM2DDL_AUTO, "update");
+
+//                settings.load(input);
                 configuration.setProperties(settings);
+                configuration.addAnnotatedClass(Customer.class);
 
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

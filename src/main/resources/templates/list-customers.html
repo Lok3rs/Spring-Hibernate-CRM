@@ -7,6 +7,10 @@
 </head>
 <body>
 <h1>List Customers - coming soon...</h1>
-
+<div th:each="customer: ${customers}">
+    <p th:text="${customer.firstName}"></p>
+    <p th:text="${customer.lastName}"></p>
+    <p th:text="${customer.email}"></p>
+</div>
 </body>
 </html>
