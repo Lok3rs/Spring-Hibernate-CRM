@@ -19,7 +19,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session currentSession = sessionFactory.getCurrentSession();
         List<Customer> customers = new ArrayList<>();
-        try (sessionFactory; currentSession) {
+        try {
             currentSession.beginTransaction();
              customers = currentSession.createQuery("from Customer as c", Customer.class).getResultList();
             currentSession.getTransaction().commit();

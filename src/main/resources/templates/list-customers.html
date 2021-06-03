@@ -3,14 +3,32 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Customer Relationship Manager</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}">
 </head>
 <body>
-<h1>List Customers - coming soon...</h1>
-<div th:each="customer: ${customers}">
-    <p th:text="${customer.firstName}"></p>
-    <p th:text="${customer.lastName}"></p>
-    <p th:text="${customer.email}"></p>
+<div class="wrapper">
+    <div class="header">
+        <h2>CRM - Customer Relationship Manager</h2>
+    </div>
+    <div class="container">
+        <div class="content">
+            <table>
+                <tr>
+                    <td><strong>First name</strong></td>
+                    <td><strong>Last name</strong></td>
+                    <td><strong>Email</strong></td>
+                </tr>
+                <tr th:each="customer: ${customers}">
+                    <td th:text="${customer.firstName}"></td>
+                    <td th:text="${customer.lastName}"></td>
+                    <td th:text="${customer.email}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </div>
+
 </body>
 </html>
