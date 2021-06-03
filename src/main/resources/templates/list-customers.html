@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Relationship Manager</title>
+    <link rel="stylesheet" th:href="@{/styles/add-customer.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}">
 </head>
 <body>
@@ -11,24 +12,26 @@
     <div class="header">
         <h2>CRM - Customer Relationship Manager</h2>
     </div>
-    <div class="container">
-        <div class="content">
-            <table>
-                <tr>
-                    <td><strong>First name</strong></td>
-                    <td><strong>Last name</strong></td>
-                    <td><strong>Email</strong></td>
-                </tr>
-                <tr th:each="customer: ${customers}">
-                    <td th:text="${customer.firstName}"></td>
-                    <td th:text="${customer.lastName}"></td>
-                    <td th:text="${customer.email}"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
 </div>
+<div class="container">
+    <div class="content">
+        <input type="button" value="Add Customer" onclick="window.location.href='showFormForAdd'; return false;"
+               class="add-button">
+        <table>
+            <tr>
+                <td><strong>First name</strong></td>
+                <td><strong>Last name</strong></td>
+                <td><strong>Email</strong></td>
+            </tr>
+            <tr th:each="customer: ${customers}">
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:text="${customer.email}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 
 </body>
 </html>

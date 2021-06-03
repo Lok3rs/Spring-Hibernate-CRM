@@ -22,10 +22,15 @@ public class CustomerController {
 
     @GetMapping("/list")
     public String listCustomers(Model model) {
-
         List<Customer> customers = customerService.getCustomers();
         model.addAttribute("customers", customers);
-
         return "list-customers";
+    }
+
+    @GetMapping("/showFormForAdd")
+    public String showFormForAdd(Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
+        return "customer-form";
     }
 }
