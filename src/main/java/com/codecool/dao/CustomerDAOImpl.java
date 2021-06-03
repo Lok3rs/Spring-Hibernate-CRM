@@ -20,7 +20,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         List<Customer> customers = new ArrayList<>();
         try {
             currentSession.beginTransaction();
-             customers = currentSession.createQuery("from Customer as c", Customer.class).getResultList();
+             customers = currentSession.createQuery("from Customer", Customer.class).getResultList();
             currentSession.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
