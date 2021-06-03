@@ -14,7 +14,6 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
-    @Transactional
     public List<Customer> getCustomers() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session currentSession = sessionFactory.getCurrentSession();
