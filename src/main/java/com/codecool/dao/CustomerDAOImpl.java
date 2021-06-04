@@ -35,7 +35,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session currentSession = sessionFactory.getCurrentSession();
         try {
             currentSession.beginTransaction();
-            currentSession.save(customer);
+            currentSession.saveOrUpdate(customer);
             currentSession.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

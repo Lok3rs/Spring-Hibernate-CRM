@@ -18,8 +18,10 @@
     <h3>Add new customer</h3>
     <form th:action="@{/customer/saveCustomer}" th:object="${customer}" th:method="POST">
         <table>
+
             <tbody>
             <tr>
+                <input type="hidden" th:field="*{id}">
                 <td><label> First name: </label></td>
                 <td><input type="text" th:field="*{firstName}"></td>
             </tr>
