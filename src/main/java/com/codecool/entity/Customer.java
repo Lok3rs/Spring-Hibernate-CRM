@@ -1,12 +1,15 @@
 package com.codecool.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "customer")
 @Data
+@EqualsAndHashCode(doNotUseGetters = true)
 public class Customer {
 
     @Id
@@ -26,6 +29,7 @@ public class Customer {
     public Customer() {
     }
 
+    @Tolerate
     public Customer(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
