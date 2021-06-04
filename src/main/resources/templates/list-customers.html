@@ -23,9 +23,15 @@
         </form>
         <table>
             <tr>
-                <td><strong>First name</strong></td>
-                <td><strong>Last name</strong></td>
-                <td><strong>Email</strong></td>
+                <td>
+                    <a th:href="@{/customer/list(sort=${T(com.codecool.util.SortUtils).FIRST_NAME})}">First name</a>
+                </td>
+                <td>
+                    <a th:href="@{/customer/list(sort=${T(com.codecool.util.SortUtils).LAST_NAME})}">Last name</a>
+                </td>
+                <td>
+                    <a th:href="@{/customer/list(sort=${T(com.codecool.util.SortUtils).EMAIL})}">Email</a>
+                </td>
                 <td><strong>Action</strong></td>
             </tr>
             <tr th:each="customer: ${customers}">

@@ -1,12 +1,9 @@
 package com.codecool.controller;
 
 
-import com.codecool.dao.CustomerDAO;
 import com.codecool.entity.Customer;
-import com.codecool.hibernateutil.HibernateUtil;
 import com.codecool.service.CustomerService;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import com.codecool.util.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +20,14 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+
     @GetMapping("/list")
-    public String listCustomers(Model model) {
-        List<Customer> customers = customerService.getCustomers();
+    public String listCustomers(Model model, @RequestParam(required = false) String sort) {
+        List<Customer> customers = customerService.getCustomers(SortUtils.LAST_NAME);
+        if (sort != null) {
+            int sortField = Integer.parseInt(sort);
+            customers = customerService.getCustomers(sortField);
+        }
         model.addAttribute("customers", customers);
         return "list-customers";
     }
@@ -44,14 +46,14 @@ public class CustomerController {
     }
 
     @GetMapping("/showFormUpdate/{id}")
-    public String showFormForUpdate(@PathVariable int id, Model model){
+    public String showFormForUpdate(@PathVariable int id, Model model) {
         Customer customer = customerService.getCustomer(id);
         model.addAttribute("customer", customer);
         return "customer-form";
     }
 
     @GetMapping("/deleteCustomer/{id}")
-    public String deleteCustomer(@PathVariable int id, HttpServletRequest request){
+    public String deleteCustomer(@PathVariable int id, HttpServletRequest request) {
         customerService.deleteCustomer(id);
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;

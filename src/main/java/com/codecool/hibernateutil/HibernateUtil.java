@@ -7,8 +7,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class HibernateUtil {
@@ -18,8 +16,6 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                // will work if start directly from main app
-//                InputStream input = new FileInputStream("application.properties");
                 Configuration configuration = new Configuration();
 
                 Properties settings = new Properties();
@@ -28,17 +24,12 @@ public class HibernateUtil {
                 settings.put(Environment.USER, System.getenv("PSQL_USERNAME"));
                 settings.put(Environment.PASS, System.getenv("PSQL_PASSWORD"));
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-
                 settings.put(Environment.SHOW_SQL, "true");
-
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
                 settings.put(Environment.HBM2DDL_AUTO, "update");
 
-//                settings.load(input);
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Customer.class);
-
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

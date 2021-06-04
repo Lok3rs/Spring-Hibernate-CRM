@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +14,20 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
-    public List<Customer> getCustomers() {
+    public List<Customer> getCustomers(int sortField) {
+        String fieldName;
+        switch (sortField) {
+            case 1 -> fieldName = "firstName";
+            case 3 -> fieldName = "email";
+            default -> fieldName = "lastName";
+        }
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session currentSession = sessionFactory.getCurrentSession();
         List<Customer> customers = new ArrayList<>();
         try {
             currentSession.beginTransaction();
-            customers = currentSession.createQuery("from Customer order by lastName", Customer.class).getResultList();
+            customers = currentSession.createQuery("from Customer order by " + fieldName, Customer.class).getResultList();
             currentSession.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
