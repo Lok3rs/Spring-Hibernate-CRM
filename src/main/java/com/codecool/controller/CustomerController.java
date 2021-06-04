@@ -42,7 +42,7 @@ public class CustomerController {
         return "redirect:list";
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
+    @GetMapping("/showFormUpdate/{id}")
     public String showFormForUpdate(@PathVariable int id, Model model){
         Customer customer = customerService.getCustomer(id);
         model.addAttribute("customer", customer);

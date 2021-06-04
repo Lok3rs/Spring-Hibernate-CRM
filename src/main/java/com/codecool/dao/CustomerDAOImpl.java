@@ -27,7 +27,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
 
         return customers;
-
     }
 
     @Override
