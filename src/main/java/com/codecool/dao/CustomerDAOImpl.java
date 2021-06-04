@@ -4,6 +4,7 @@ import com.codecool.entity.Customer;
 import com.codecool.hibernateutil.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -20,7 +21,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         List<Customer> customers = new ArrayList<>();
         try {
             currentSession.beginTransaction();
-             customers = currentSession.createQuery("from Customer order by lastName", Customer.class).getResultList();
+            customers = currentSession.createQuery("from Customer order by lastName", Customer.class).getResultList();
             currentSession.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,5 +70,29 @@ public class CustomerDAOImpl implements CustomerDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Customer> searchCustomers(String searchPhrase) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session currentSession = sessionFactory.getCurrentSession();
+        List<Customer> customers = new ArrayList<>();
+        try {
+            currentSession.beginTransaction();
+            Query<Customer> query;
+            if (searchPhrase != null && searchPhrase.trim().length() > 0) {
+                query = currentSession.createQuery("from Customer where lower(firstName) like :searchPhrase or " +
+                        "lower(lastName) like :searchPhrase or " +
+                        "lower(email) like :searchPhrase", Customer.class);
+                query.setParameter("searchPhrase", "%" + searchPhrase.toLowerCase() + "%");
+            } else {
+                query = currentSession.createQuery("from Customer order by lastName", Customer.class);
+            }
+            customers = query.getResultList();
+            currentSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customers;
     }
 }

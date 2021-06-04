@@ -17,6 +17,10 @@
     <div class="content">
         <input type="button" value="Add Customer" onclick="window.location.href='showFormForAdd'; return false;"
                class="add-button">
+        <form th:action="@{/customer/search}" method="get">
+            <input type="text" placeholder="Search customer: " name="searchName">
+            <input type="submit" value="Search" class="add-button">
+        </form>
         <table>
             <tr>
                 <td><strong>First name</strong></td>
