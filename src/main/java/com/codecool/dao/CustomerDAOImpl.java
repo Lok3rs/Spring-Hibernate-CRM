@@ -42,4 +42,19 @@ public class CustomerDAOImpl implements CustomerDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Customer getCustomer(int id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Customer customer = null;
+        try {
+            currentSession.beginTransaction();
+            customer = currentSession.get(Customer.class, id);
+            currentSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
 }

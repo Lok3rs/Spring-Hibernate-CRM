@@ -3,14 +3,14 @@ package com.codecool.controller;
 
 import com.codecool.dao.CustomerDAO;
 import com.codecool.entity.Customer;
+import com.codecool.hibernateutil.HibernateUtil;
 import com.codecool.service.CustomerService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +40,12 @@ public class CustomerController {
     public String saveCustomer(@ModelAttribute("customer") Customer customer) {
         customerService.saveCustomer(customer);
         return "redirect:list";
+    }
+
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable int id, Model model){
+        Customer customer = customerService.getCustomer(id);
+        model.addAttribute("customer", customer);
+        return "customer-form";
     }
 }
