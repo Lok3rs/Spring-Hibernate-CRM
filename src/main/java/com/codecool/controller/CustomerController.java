@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -47,5 +48,12 @@ public class CustomerController {
         Customer customer = customerService.getCustomer(id);
         model.addAttribute("customer", customer);
         return "customer-form";
+    }
+
+    @GetMapping("/deleteCustomer/{id}")
+    public String deleteCustomer(@PathVariable int id, HttpServletRequest request){
+        customerService.deleteCustomer(id);
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 }
